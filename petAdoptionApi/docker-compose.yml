@@ -1,0 +1,13 @@
+﻿version: '3.8'
+services:
+  postgres:
+    image: postgres:12
+    volumes:
+      - ./db-data:/db-data
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=root
+      - POSTGRES_DB=pet-adoption-database
+      - PG_DATA=/db-data
+    ports:
+      - 5432:5432
