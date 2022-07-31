@@ -11,10 +11,11 @@
     "petAdoptionApi": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:7182;http://localhost:5182",
+      "applicationUrl": "https://localhost:8014",
       "dotnetRunMessages": true
     },
     "IIS Express": {
