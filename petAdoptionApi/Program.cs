@@ -7,21 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PetAdoptionDB");
 
 builder.Services.AddDbContext<PetAdoptionContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(connectionString ?? ""));
 // Add services to the container.
-
-using (var context = new PetAdoptionContext())
-{
-
-    var std = new Pet()
-    {
-        Name = "Bill",
-        Breed = "Ponei"
-    };
-
-    context.pets.Add(std);
-    context.SaveChanges();
-}
 
 builder.Services.AddOptions();
 builder.Services.AddControllers();
@@ -36,12 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
-
 
 app.Run();

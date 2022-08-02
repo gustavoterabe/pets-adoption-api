@@ -24,17 +24,28 @@ namespace petAdoptionApi.Controllers
         }
 
 
-
-
         /// <summary>
         /// Esta funcao serve para ver se vc fez merda ou nao 
         /// </summary>
         /// <param name="id">Identificator unique for each Pet</param>
         /// <returns></returns>
-        [HttpGet(Name = "GetTest")]
+        [HttpGet("GetTest")]
         public Pet GetPet(int id)
         {
-            return _context.pets.Where(b => b.Id == id).FirstOrDefault();
+            Pet pet = _context.pets.Where(b => b.Id == id).FirstOrDefault();
+
+            if (pet == null)
+                throw new KeyNotFoundException($"Pet with id {id} not found");
+
+            return pet;
+        }
+
+        [HttpPost("v1/create")]
+        public HttpResponseMessage Create(Pet pet)
+        {
+            _context.pets.Add(pet);
+            _context.SaveChanges();
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
 
         //// GET: Pet
@@ -55,20 +66,8 @@ namespace petAdoptionApi.Controllers
         //    return View();
         //}
 
-        //// POST: Pet/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+
+
 
         //// GET: Pet/Edit/5
         //[HttpGet(Name = "Pet")]
