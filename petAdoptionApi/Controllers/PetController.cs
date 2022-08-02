@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Npgsql;
+using petAdoptionApi.Models;
+using petAdoptionApi.Models.Start_Model;
+using PowerArgs;
 
 namespace petAdoptionApi.Controllers
 {
@@ -8,17 +12,29 @@ namespace petAdoptionApi.Controllers
     public class PetController : Controller
     {
         private readonly ILogger<PetController> _logger;
+        private readonly PetAdoptionContext _context;
 
-        public PetController(ILogger<PetController> logger)
+        public PetController(
+            ILogger<PetController> logger,
+            PetAdoptionContext context
+        )
         {
+            _context = context;
             _logger = logger;
         }
 
+
+
+
+        /// <summary>
+        /// Esta funcao serve para ver se vc fez merda ou nao 
+        /// </summary>
+        /// <param name="id">Identificator unique for each Pet</param>
+        /// <returns></returns>
         [HttpGet(Name = "GetTest")]
-        public string Get()
+        public Pet GetPet(int id)
         {
-            _logger.LogError("ola");
-            return "Testing please work, I just wanna coffee";
+            return _context.pets.Where(b => b.Id == id).FirstOrDefault();
         }
 
         //// GET: Pet
